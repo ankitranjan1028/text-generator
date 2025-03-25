@@ -573,7 +573,7 @@ export default function Home() {
 
   return (
     <Container className="py-8 bg-dark-bg min-h-screen text-white">
-      <Title className="text-center mb-8 text-green-accent text-4xl font-bold">
+      <Title className="text-center mb-8 text-green-accent text-3xl font-bold">
         Rebane's Discord Colored Text Generator
       </Title>
 
