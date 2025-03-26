@@ -15,6 +15,30 @@ import { useClipboard } from "@mantine/hooks";
 import ContentEditable from "react-contenteditable";
 import GraphemeSplitter from "grapheme-splitter";
 
+
+// The provided code defines ANSI color codes and corresponding color 
+// options for the Discord Colored Text Generator:
+
+// ANSI_COLORS Object:
+
+// This maps foreground (FG) and background (BG) colors to their corresponding ANSI 
+// escape sequences, which are used to style text in Discord (or terminal output).
+
+// It also includes a RESET property (\u001b[0m) to clear/reset the applied styles.
+
+// Each color is represented by a hexadecimal value (e.g., #dc322f for red) and is linked 
+// to an ANSI escape code (e.g., \u001b[32m).
+
+// fgColors Array:
+
+// This is a list of available foreground colors with their respective hex values 
+// (color) and descriptive labels (label).
+
+// These colors will be displayed in the color picker for users to choose and apply to selected text.
+
+// In summary, this code enables styling text with ANSI colors by mapping user-selected
+//  colors to their ANSI escape sequences, allowing text to be formatted and styled within Discord messages.
+
 const ANSI_COLORS = {
   FG: {
     "#4f545c": "\u001b[31m",
@@ -75,6 +99,22 @@ const bgColors = [
 
 ];
 
+
+// The ColorGrid component renders a grid of color buttons for selecting foreground (FG) or background (BG) colors 
+// in the Discord Colored Text Generator. It takes four props:
+
+// colors – An array of color objects, each with a label (name) and color (hex value).
+
+// type – Indicates whether the grid is for "FG" (foreground) or "BG" (background).
+
+// applyColor – A function that applies the selected color to the chosen text.
+
+// currentColor – The currently active color to visually highlight the selected button.
+
+// The component displays a title (type), and a 10-column grid where each color is represented
+//  by a button. When a button is clicked, it triggers applyColor with the selected color and 
+//  type. The currently active color is highlighted using the "active-color" CSS class.
+
 const ColorGrid = ({ colors, type, applyColor, currentColor }) => (
   <div>
     <Text className="text-center mb-6 text-white">{type}</Text>
@@ -92,6 +132,16 @@ const ColorGrid = ({ colors, type, applyColor, currentColor }) => (
     </SimpleGrid>
   </div>
 );
+
+// This code initializes the Home component for a Discord Colored Text 
+// Generator, setting up the initial text and character styles. It uses 
+// GraphemeSplitter to split the welcome message into graphemes (handling 
+//   multi-codepoint characters) and manages the text and styles using 
+//   useState. Each character is assigned a style object with properties 
+//   for foreground color (fg), background color (bg), bold, and underline, 
+//   with specific sections of the text pre-styled in different colors and 
+//   backgrounds. This setup ensures the text is displayed with predefined 
+//   -style formatting.
 
 export default function Home() {
   const splitter = new GraphemeSplitter();
@@ -143,6 +193,21 @@ export default function Home() {
 
     return styles;
   });
+  
+  
+  // This code manages the state and behavior of a Discord Colored Text Generator. 
+  // It uses React's useState hook to track the current foreground (currFgClr) 
+  // and background (currBgClr) colors, as well as whether bold (isBoldActive) 
+  // and underline (isUnderlineActive) formatting is active. The useRef hook 
+  // (contentEditableRef) references the content-editable field, enabling direct 
+  // manipulation of the user's selected text. Users can select text and apply styles,
+  //  which updates the corresponding state variables. The useClipboard hook allows 
+  //  users to copy the styled text to the clipboard, displaying a "Copied!" message
+  //   for 500 milliseconds. This setup ensures real-time formatting updates, easy 
+  //   style toggling, and seamless text copying while providing an interactive and 
+  //   dynamic user experience.
+
+
   const [currFgClr, setcurrFgClr] = useState("#ffffff");
   const [currBgClr, setcurrBgClr] = useState("#1a1b1e");
   const [isBoldActive, setIsBoldActive] = useState(false);
@@ -150,7 +215,9 @@ export default function Home() {
   const contentEditableRef = useRef(null);
   const clipboard = useClipboard({ timeout: 500 });
 
-
+  // The getCharacterOffsets function calculates the start and end character offsets of a given 
+  // selection (range) inside a contenteditable element. This is particularly useful for tracking 
+  // and manipulating the user's selection in rich-text editing environments.
 
   const getCharacterOffsets = (range, contentEditableElement) => {
     let startOffset = 0;
@@ -181,6 +248,11 @@ export default function Home() {
     return { startOffset, endOffset };
   };
 
+
+  // The applyColor function is used to apply foreground (text) or background color to a user’s 
+  // selection within a contentEditable element. It tracks and updates the color styles for 
+  // each character based on the user's selection.
+
   const applyColor = (color, type) => {
     const selection = window.getSelection();
     if (selection.rangeCount > 0 && selection.toString().length > 0) {
@@ -208,6 +280,9 @@ export default function Home() {
     else if (type === "BG") setcurrBgClr(color);
   };
 
+  // The applyBold function is responsible for toggling the bold style on 
+  // the selected text in the content-editable field of your Discord Colored Text Generator.
+
   const applyBold = () => {
     const selection = window.getSelection();
     if (selection.rangeCount > 0 && selection.toString().length > 0) {
@@ -232,6 +307,9 @@ export default function Home() {
     setIsBoldActive(newBoldState);
     console.log(`Bold button is now ${newBoldState ? "active" : "inactive"}`);
   };
+
+  // The applyUnderline function is used to toggle the underline style for the selected
+  //  text in the content-editable field of your Discord Colored Text Generator.
 
   const applyUnderline = () => {
     const selection = window.getSelection();
@@ -262,6 +340,12 @@ export default function Home() {
       `Underline button is now ${newUnderlineState ? "active" : "inactive"}`
     );
   };
+
+
+  // The clearFormatting function is used to remove all applied styles (foreground color, 
+  //   background color, bold, and underline) from the selected text in the content-editable 
+  //   field within your Discord Colored Text Generator.
+
 
   const clearFormatting = () => {
     const selection = window.getSelection();
@@ -297,6 +381,11 @@ export default function Home() {
     console.log("Underline button is now inactive due to clearFormatting");
   };
 
+  // The handleChange function is used to handle text input changes in a contentEditable
+  //  or input element while maintaining character-specific formatting (like foreground color,
+  //    background color, bold, and underline). It ensures that as the user types or modifies 
+  //    text, the formatting is preserved and new characters inherit the current styling.
+
   const handleChange = (evt) => {
     const newText = evt.target.value.replace(/<[^>]+>/g, "") || "";
     const newCharStyles = Array(newText.length).fill(null);
@@ -328,6 +417,11 @@ export default function Home() {
     console.log("Bold button is now inactive due to resetText");
     console.log("Underline button is now inactive due to resetText");
   };
+
+  // The updateFormattingState function synchronizes the formatting toolbar 
+  // (like bold and underline buttons) with the user's current text selection 
+  // in a rich text editor. It ensures that when the user highlights text, the 
+  // bold and underline buttons reflect whether the entire selection is uniformly styled.
 
   const updateFormattingState = () => {
     const selection = window.getSelection();
@@ -362,6 +456,12 @@ export default function Home() {
       }
     }
   };
+
+
+  // The copyText function generates Discord-compatible ANSI-formatted text from styled 
+  // content in a rich text editor and copies it to the user's clipboard. It converts the 
+  // character-specific styles (foreground color, background color, bold, underline) to 
+  // ANSI escape codes that Discord supports inside a code block.
 
   const copyText = () => {
     let ansiText = "";
@@ -432,9 +532,15 @@ export default function Home() {
     if (underlineActive) ansiText += "__";
     ansiText += ANSI_COLORS.RESET;
 
-    const discordFormattedText = "```ansi\n" + ansiText;
+    const discordFormattedText = "```ansi\n" + ansiText + "```";
     clipboard.copy(discordFormattedText);
   };
+
+
+  // The generateStyledHtml function dynamically converts styled text into HTML by
+  //  wrapping each group of characters with the same style in a <span> element. 
+  //  It ensures that text with different styles (foreground color, background 
+  //   color, bold, and underline) is correctly formatted as HTML.
 
   const generateStyledHtml = () => {
     if (!text) return "";
@@ -493,6 +599,12 @@ export default function Home() {
     return html;
   };
 
+
+  // The renderStyledText function uses the useMemo hook to efficiently render a 
+  // styled version of the text based on the corresponding character styles stored 
+  // in the charStyles array. It dynamically creates React <span> elements for groups 
+  // of characters sharing the same style.
+
   const renderStyledText = useMemo(() => {
     if (!text || typeof text !== "string")
       return <span className="text-white"> </span>;
@@ -550,6 +662,8 @@ export default function Home() {
         currentSpan.text += text[i];
       }
     }
+    //currentSpan.text+='```';
+
 
     if (currentSpan.text) {
       spans.push(
@@ -570,6 +684,11 @@ export default function Home() {
 
     return spans;
   }, [text, charStyles]);
+
+
+  // This code represents the main UI component of a Discord Colored Text Generator
+  //  built using React with Tailwind CSS for styling. It allows users to create and 
+  //  copy ANSI-styled text that can be used in Discord chat for colored and formatted messages.
 
   return (
     <Container className="py-8 bg-dark-bg min-h-screen text-white">
