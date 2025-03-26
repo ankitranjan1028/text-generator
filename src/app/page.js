@@ -712,7 +712,7 @@ export default function Home() {
           Create Your Text
         </Title>
 
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mt-3 mb-6">
           <Group position="center" spacing="xs">
             <Button
               onClick={resetText}
