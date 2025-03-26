@@ -7,6 +7,7 @@ import {
   Button,
   Group,
   SimpleGrid,
+  Grid,
   Center,
 } from "@mantine/core";
 
@@ -49,8 +50,8 @@ const ANSI_COLORS = {
     "#d33682": "\u001b[33m",
     "#2aa198": "\u001b[36m",
     "#ffffff": "\u001b[38;2;255;170;0m",
-    '#ffff55': '\u001b[90m',
-    '#55ffff': '\u001b[95m',
+    // '#ffff55': '\u001b[90m',
+    // '#55ffff': '\u001b[95m',
 
     
   },
@@ -63,8 +64,8 @@ const ANSI_COLORS = {
     "#6c71c4": "\u001b[43m",
     "#93a1a1": "\u001b[46m",
     '#fdf6e3': '\u001b[48;2;255;170;0m',
-    '#ffff55': '\u001b[100m',
-    '#55ffff': '\u001b[105m',
+    // '#ffff55': '\u001b[100m',
+    // '#55ffff': '\u001b[105m',
 
   },
   RESET: "\u001b[0m",
@@ -80,8 +81,8 @@ const fgColors = [
   { color: "#d33682", label: "Pink" },
   { color: "#2aa198", label: "Teal" },
   { color: "#ffffff", label: "White" },
-  { color: '#ffff55', label: 'Yellow' },
-  { color: '#55ffff', label: 'Cyan' },
+  // { color: '#ffff55', label: 'Yellow' },
+  // { color: '#55ffff', label: 'Cyan' },
 
 ];
 
@@ -94,8 +95,8 @@ const bgColors = [
   { color: "#6c71c4", label: "Purple" },
   { color: "#93a1a1", label: "Light Gray(60%)" },
   { color: "#fdf6e3", label: "Cream White" },
-  { color: '#ffff55', label: 'Yellow' },
-  { color: '#55ffff', label: 'Cyan' },
+  // { color: '#ffff55', label: 'Yellow' },
+  // { color: '#55ffff', label: 'Cyan' },
 
 ];
 
@@ -118,12 +119,12 @@ const bgColors = [
 const ColorGrid = ({ colors, type, applyColor, currentColor }) => (
   <div>
     <Text className="text-center mb-6 text-white">{type}</Text>
-    <SimpleGrid cols={10} spacing="xs">
+    <SimpleGrid cols={8} spacing={'xs'}>
       {colors.map((color) => (
         <Button
           key={color.label}
           onClick={() => applyColor(color.color, type)}
-          className={`w-10 h-10 border-2 border-border-gray ${
+          className={`w-10 h-10 border-2 border-border-gray ml-3 ${
             color.color === currentColor ? "active-color" : ""
           }`}
           style={{ backgroundColor: color.color}}
