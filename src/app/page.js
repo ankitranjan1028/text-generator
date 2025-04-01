@@ -116,6 +116,24 @@ const bgColors = [
 //  by a button. When a button is clicked, it triggers applyColor with the selected color and 
 //  type. The currently active color is highlighted using the "active-color" CSS class.
 
+// const ColorGrid = ({ colors, type, applyColor, currentColor }) => (
+//   <div>
+//     <Text className="text-center mb-6 text-white">{type}</Text>
+//     <SimpleGrid cols={8} spacing={'xs'}>
+//       {colors.map((color) => (
+//         <Button
+//           key={color.label}
+//           onClick={() => applyColor(color.color, type)}
+//           className={`w-10 h-10 border-2 border-border-gray ml-3 ${
+//             color.color === currentColor ? "active-color" : ""
+//           }`}
+//           style={{ backgroundColor: color.color}}
+//         />
+//       ))}
+//     </SimpleGrid>
+//   </div>
+// );
+
 const ColorGrid = ({ colors, type, applyColor, currentColor }) => (
   <div>
     <Text className="text-center mb-6 text-white">{type}</Text>
@@ -124,15 +142,18 @@ const ColorGrid = ({ colors, type, applyColor, currentColor }) => (
         <Button
           key={color.label}
           onClick={() => applyColor(color.color, type)}
-          className={`w-10 h-10 border-2 border-border-gray ml-3 ${
+          className={`w-10 h-10 border-2 border-border-gray ${
             color.color === currentColor ? "active-color" : ""
-          }`}
+          } md:ml-3`}
           style={{ backgroundColor: color.color}}
         />
       ))}
     </SimpleGrid>
   </div>
 );
+
+
+
 
 // This code initializes the Home component for a Discord Colored Text 
 // Generator, setting up the initial text and character styles. It uses 
